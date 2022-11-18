@@ -20,8 +20,8 @@
 ### Instructions
 
 **Pre-requisites**
-* [Oracle VirtualBox](https://www.virtualbox.org/)
-* [Debian](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/)
+* [Oracle VirtualBox](https://www.virtualbox.org/) (6.1.38 version)
+* [Debian](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/) (11.5.0 version)
 * Enough free disk space.
 
 ## 📋 Credits
