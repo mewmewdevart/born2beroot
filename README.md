@@ -26,6 +26,7 @@
 
 ## 📋 Credits
 
+* [Debian Guide](https://www.debian.org/releases/stable/installmanual)
 * [Readme.Infos/Mcombeau](https://github.com/mcombeau)
 
 <p align="center"> Developed with love 💜 by Larissa Cristina Benedito (Mewmew/Larcrist). </p>
