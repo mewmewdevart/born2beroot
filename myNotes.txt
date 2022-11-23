@@ -1,0 +1,14 @@
+- Criação de uma maquina virtual no VirtualBox.
+   1024MB e 12GB de memoria
+- Instalação do Debian
+    Partição do disco:
+      /boot (arquivos estáticos do carregador de inicialização)
+      /home (diretório pessoal dos usuarios)
+      /tmp (arquivos temporarios)
+      /usr (dados estáticos)
+      /var (dados variáveis)
+      /srv (dados de serviços fornecidos por este sistema)
+      /opt (pacotes de softwares de aplicações adicionais)
+      /usr/local (hierarquia local)
+      
+      Exemplo de montagem: Create Logical Volume >> LVMGroup >> root >> xx.GB >> ```Ext4``` >> ```Mount point``` >> ```/pastName``` >> ```Done```
