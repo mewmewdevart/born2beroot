@@ -1,7 +1,16 @@
+______                   _____         ______             _   
+| ___ \                 / __  \        | ___ \           | |  
+| |_/ / ___  _ __ _ __  `' / /'_ __ ___| |_/ / ___   ___ | |_ 
+| ___ \/ _ \| '__| '_ \   / / | '__/ _ \ ___ \/ _ \ / _ \| __|
+| |_/ / (_) | |  | | | |./ /__| | |  __/ |_/ / (_) | (_) | |_ 
+\____/ \___/|_|  |_| |_|\_____/_|  \___\____/ \___/ \___/ \__|
+                                                              
+                                            -42Configure [pt-BR]
+
 - Criação de uma maquina virtual no VirtualBox.
    1024MB e 12GB de memoria
 - Instalação do Debian
-    Partição do disco:
+    Partição do disco: [BONUS]
       /boot (arquivos estáticos do carregador de inicialização)
       /home (diretório pessoal dos usuarios)
       /tmp (arquivos temporarios)
