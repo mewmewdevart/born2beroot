@@ -44,6 +44,14 @@ A:      Secure Socket Shell (SSH), um protocolo especifico de segurança de troc
 
 
 
+NOTES:
+    O que você fez com os scripts criados para o projeto?
+	Adicionei eles no arquivo contrab para ter um delay no script baseado na hora em que o usuario ligou a maquina
+	    */10 * * * * bash /root/scripts/sleep.sh && bash /root/scripts/monitoring.sh
+
+_______________________________________________________________________________________________________
+
+
 Gerenciando os usuarios do sistema:
     - Criação de um novo usuario:
         $ sudo adduser username                 <- creating new user with new password (yes (no))
