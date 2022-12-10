@@ -7,7 +7,7 @@ ______                   _____         ______             _
                                                               
                                             -42Evaluation [Q&A / pt-BR]
 
-[Project Overview]
+[PART 1]
 Q: O que é uma maquina virtual?
 A: Uma maquina virtual (VM) é um programa capaz de simular sistemas operacionais e aplicativos como se fosse uma máquina fisica.
         A simulação é diferente de um emulador, que visa copiar os recursos de um programa ou sistema e fazê-lo rodar em conjunto com o seu computador. Neste caso, a maquina virtual opera de forma completamente independente e isolada.
@@ -43,31 +43,68 @@ A:      Secure Socket Shell (SSH), um protocolo especifico de segurança de troc
     realizem alterações em sistemas utilizando uma conexão simples e segura.
 
 
-[Simple Setup]
-(x) Certifique-se de que a máquina não tenha um ambiente gráfico na inicialização.
-(x) Uma senha será solicitada antes de tentar se conectar a esta máquina. Por fim, conecte-se com um usuário com a ajuda do aluno que está sendo avaliado. Este usuário não deve ser root.
-    As regras aplicadas na senha desse usuario não root devem ser as informações pedidas no pdf:
-        Sua senha deve ter pelo menos 10 caracteres. Deve conter letra maiúscula letra, uma letra minúscula e um número. 
-        Além disso, não deve conter mais de 3 caracteres consecutivos identicos. A senha não deve incluir o nome do usuário.
- 
-(x) Verifique se o serviço UFW foi iniciado com a ajuda do avaliador.
-    O que é UFW?
-(x) Verifique se o serviço SSH foi iniciado com a ajuda do avaliador.
-    O que é SSH?
-(x) Cheque se o sistema é realmente Debian
+
+NOTES:
+    O que você fez com os scripts criados para o projeto?
+	Adicionei eles no arquivo contrab para ter um delay no script baseado na hora em que o usuario ligou a maquina
+	    */10 * * * * bash /root/scripts/sleep.sh && bash /root/scripts/monitoring.sh
+
+_______________________________________________________________________________________________________
 
 
-[User]
-[Hostname and partitions]
-[SUDO]
-[UFW]
-[SSH]
-[Script monitoring]
-( ) Verifique se o serviço SSH está instalado corretamente na máquina virtual está funcionando corretamente.
-( ) O aluno avaliado deve ser capaz de te explicar basicamente o que é SSH e o valor de utilizá-lo.
-( ) Verifique se o serviço SSH usa apenas a porta 4242.
-( ) O aluno avaliado deverá ajudá-lo a usar o SSH para fazer o login com o usuário recém-criado. Façam isso, você pode usar uma chave ou uma senha simples. Vai depender do aluno que está sendo avaliado. Claro, você
-tem que se certificar de que você não pode usar SSH com o usuário "root", conforme indicado no assunto.
+Gerenciando os usuarios do sistema:
+    - Criação de um novo usuario:
+        $ sudo adduser username                 <- creating new user with new password (yes (no))
+        $ sudo change -l username               <- Verify password expire info for new user
+        $ sudo adduser username sudo
+        $ sudo adduser username user42          <- assign new user to sudo and user42 groups
 
-[Bonus]
-(x) Configurar partições vale 2 pontos.
+______________________________________________________________________________________________________
+[PART 2] - To be continue
+
+Q: Como o seu script funciona?
+A:
+
+1) lsblk                              1 <- Check partitions
+2) sudo aa-status                     2 <- AppArmor status
+3) getent group sudo                  3 <- sudo group users
+4) getent group user42                4 <- user42 group users
+5) sudo service ssh status            5 <- ssh status, yep
+6) sudo ufw status                    6 <- ufw status
+7) ssh username@ipadress -p 4242      7 <- connect to VM from your host (physical) machine via SSH
+8) nano /etc/sudoers.d/<filename>     8 <- yes, sudo config file. You can $ ls /etc/sudoers.d first
+9) nano /etc/login.defs               9 <- password expire policy
+10) nano /etc/pam.d/common-password  10 <- password policy
+11) sudo crontab -l                  11 <- cron schedule
+
+Others notes
+How to change hostname?
+[$sudo nano /etc/hostname]
+
+Where is sudo logs in /var/log/sudo?
+[$cd /var/log/sudo/00/00 && ls]
+You will see a lot of directories with names like 01 2B 9S 4D etc. They contain the logs we need.
+[$ sudo apt update]
+[$ ls]
+Now you see that we have a new directory here.
+[$ cd <nameofnewdirectory> && ls]
+[$ cat log] <- Input log
+[$ cat ttyout] <- Output log
+
+How to add and remove port 8080 in UFW?
+[$ sudo ufw allow 8080] <- allow
+[$ sudo ufw status] <- check
+[$ sudo ufw deny 8080] <- deny (yes yes)
+
+How to run script every 30 seconds?
+[$ sudo crontab -e]
+Remove or commit previous cron "schedule" and add next lines in crontab file
+|*************************************************|
+| */1 * * * * /path/to/monitoring.sh              |
+| */1 * * * * sleep 30s && /path/to/monitoring.sh |
+|*************************************************|
+To stop script running on boot you just need to remove or commit
+|********************************|
+| @reboot /path/to/monitoring.sh |
+|********************************|
+line in crontab file.
