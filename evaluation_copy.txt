@@ -76,7 +76,7 @@ A:
 9) nano /etc/login.defs               9 <- password expire policy
 10) nano /etc/pam.d/common-password  10 <- password policy
 11) sudo crontab -l                  11 <- cron schedule
-
+'
 Others notes
 How to change hostname?
 [$sudo nano /etc/hostname]

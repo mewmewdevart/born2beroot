@@ -7,6 +7,13 @@ ______                   _____         ______             _
                                                               
                                             -42Evaluation [Q&A / pt-BR]
 
+[Assinatura]
+    Vá ao diretorio em que você criou a seu sistema operaciona virtual, abra o terminal na pasta e execute o comando abaixo para obter a assinatura:
+
+    `$ sha1sum <nome do arquivo>.vdi`
+
+    Sha1sum é a impressão digital e confiavel da sua maquina virtualizada.
+
 [Project Overview]
 Q: O que é uma maquina virtual?
 A: Uma maquina virtual (VM) é um programa capaz de simular sistemas operacionais e aplicativos como se fosse uma máquina fisica.
@@ -46,19 +53,43 @@ A:      Secure Socket Shell (SSH), um protocolo especifico de segurança de troc
 [Simple Setup]
 (x) Certifique-se de que a máquina não tenha um ambiente gráfico na inicialização.
 (x) Uma senha será solicitada antes de tentar se conectar a esta máquina. Por fim, conecte-se com um usuário com a ajuda do aluno que está sendo avaliado. Este usuário não deve ser root.
-    As regras aplicadas na senha desse usuario não root devem ser as informações pedidas no pdf:
+    As regras aplicadas na senha desse usuario não [root] devem ser as informações pedidas no pdf:
         Sua senha deve ter pelo menos 10 caracteres. Deve conter letra maiúscula letra, uma letra minúscula e um número. 
         Além disso, não deve conter mais de 3 caracteres consecutivos identicos. A senha não deve incluir o nome do usuário.
  
 (x) Verifique se o serviço UFW foi iniciado com a ajuda do avaliador.
-    O que é UFW?
-(x) Verifique se o serviço SSH foi iniciado com a ajuda do avaliador.
-    O que é SSH?
-(x) Cheque se o sistema é realmente Debian
+    '$ sudo ufw status"
 
+    O que é UFW?
+    O Uncomplicated Firewall é dispositivo de segurança de rede que monitora o trafego do que entra e do que sai da sua maquina. 
+        O UFW em especifico possui a configurações descomplicada, sendo possivel configura-la através de linhas de comandos ou em uma interface grafica.
+    
+    Faz a utilização do iptables :  análise do tráfego de redes recebido pelo computador, no qual é feita uma comparação com o conjunto de regras preestabelecidas nas configurações.
+
+    Link: https://e-tinet.com/linux/firewall-com-ufw/
+(x) Verifique se o serviço SSH foi iniciado com a ajuda do avaliador.
+    '$ systemctl ssh status'
+
+(x) Cheque se o sistema é realmente Debian
+    '$ cat /etc/os-release'
+            ou
+    '$ lsb_release - a'
 
 [User]
+    0. Verificar se o usuario com o login do aluno avaliado está adicionado ao grupo "sudo" e "user42"
+
+    1. Avaliador: Primeiro, crie um novo usuário. Atribua a ele uma senha de sua preferência, respeitando as regras do assunto.
+    2. Peça ao aluno para criar um grupo chamado "evaluating" e atribuir o seu usuario a esse grupo. Verifique se o usuario faz parte do grupo.
+
+    O aluno que está sendo avaliado agora deve explicar para você como conseguiu configurar as regras solicitadas no assunto em sua máquina virtual.
+    E o porquê dessa politica de senhas ser importante!
+
 [Hostname and partitions]
+    1. Verificar se o hostname da maquina é o login da aluna avaliada " Larcrist42 "
+    2. Modifique o hostname pelo login do avaliador e reinicie a maquina. Se na reinicialização, o nome do host não foi atualizado, a avaliação termina aqui.
+
+    3. Visualize as partições da maquina e de uma explicão de como ela funciona (LVM-Group).
+    '$  '
 [SUDO]
 [UFW]
 [SSH]
