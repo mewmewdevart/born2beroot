@@ -52,9 +52,11 @@ A:      Secure Socket Shell (SSH), um protocolo especifico de segurança de troc
 
 [Simple Setup]
 (x) Certifique-se de que a máquina não tenha um ambiente gráfico na inicialização.
-(x) Uma senha será solicitada antes de tentar se conectar a esta máquina. Por fim, conecte-se com um usuário com a ajuda do aluno que está sendo avaliado. Este usuário não deve ser root.
+(x) Uma senha será solicitada antes de tentar se conectar a esta máquina. Por fim, conecte-se com um usuário com a ajuda do aluno que está sendo avaliado.
+ Este usuário não deve ser root.
     As regras aplicadas na senha desse usuario não [root] devem ser as informações pedidas no pdf:
-        Sua senha deve ter pelo menos 10 caracteres. Deve conter letra maiúscula letra, uma letra minúscula e um número. 
+        Sua senha deve ter pelo menos 10 caracteres.
+        Deve conter letra maiúscula letra, uma letra minúscula e um número. 
         Além disso, não deve conter mais de 3 caracteres consecutivos identicos. A senha não deve incluir o nome do usuário.
  
 (x) Verifique se o serviço UFW foi iniciado com a ajuda do avaliador.
@@ -77,28 +79,107 @@ A:      Secure Socket Shell (SSH), um protocolo especifico de segurança de troc
 
 [User]
     0. Verificar se o usuario com o login do aluno avaliado está adicionado ao grupo "sudo" e "user42"
+ 
+    '$ getent group sudo '
+    '$ getent group user42 '
 
     1. Avaliador: Primeiro, crie um novo usuário. Atribua a ele uma senha de sua preferência, respeitando as regras do assunto.
+
+    '$ adduser userAvaliador'
+    (Senha com + de 10 caracteres, com Maiuscula, Minuscula e sem +3 palavras repetidos)
+
     2. Peça ao aluno para criar um grupo chamado "evaluating" e atribuir o seu usuario a esse grupo. Verifique se o usuario faz parte do grupo.
+    '$ addgroup evaluating '
+    '$ gpasswd -a userAvaliador evaluating'
+    '$ getent group evaluating '
 
     O aluno que está sendo avaliado agora deve explicar para você como conseguiu configurar as regras solicitadas no assunto em sua máquina virtual.
     E o porquê dessa politica de senhas ser importante!
 
-[Hostname and partitions]
-    1. Verificar se o hostname da maquina é o login da aluna avaliada " Larcrist42 "
-    2. Modifique o hostname pelo login do avaliador e reinicie a maquina. Se na reinicialização, o nome do host não foi atualizado, a avaliação termina aqui.
 
+    A política de troca de senha é importante para se prevenir da “previsibilidade” uma vez que os usuários costumam por padrão utilizar a mesma senha em diversas contas (pessoas e profissionais). 
+    O que eleva drasticamente a vulnerabilidade da empresa e da pessoa física a vazamento de dados.
+
+[Hostname and partitions]
+    1. Verificar se o hostname da maquina é o login da aluna avaliada "Larcrist42 "
+        '$ hostname '
+    2. Modifique o hostname pelo login do avaliador e reinicie a maquina. Se na reinicialização, o nome do host não foi atualizado, a avaliação termina aqui.
+        I) Type the following command to edit /etc/hostname using nano or vi text editor: delete the old name and setup new name
+            '$ sudo nano /etc/hostname '
+
+        II) Replace any occurrence of the existing computer name with your new one.
+            '$ sudo nano /etc/hosts '
+
+        III) Reboot the system to changes take effect:
+            '$ sudo reboot '
     3. Visualize as partições da maquina e de uma explicão de como ela funciona (LVM-Group).
-    '$  '
+    
+    '$  lsblk '
+
+    LVM (LOGICAL VIRTUAL MANAGE) é um método de alocar espaço do disco rígido em volumes lógicos que podem ser facilmente redimensionados.
+    Nele é possivel alturar os volumes, criar backup de imagens dos volumes, criar um volume unico a partir de varios e etc sem interrupções.
+        Seu objetivo é permitir uma flexibilidade grande para o administrador no gerenciamento dos discos.
+
 [SUDO]
+    1. Verifique se o programa "sudo" está instalado corretamente na máquina virtual.
+        Retorna o caminho completo do executável/binario do sistema. 
+        '$  which sudo'
+    2. O aluno que está sendo avaliado agora deve aparecer atribuindo seu novo usuário ao grupo "sudo"
+    '$ adduser userName sudo ' 
+    '$ deluser userName sudo '
+    '$ getent group sudo '
+
+    3. O aluno avaliado deve primeiro explicar o valor e operação do sudo usando exemplos de sua escolha. Em uma segunda etapa, deve mostrar a você a implementação de as regras impostas pelo pdf
+        Verifique se a pasta "/var/log/sudo/" existe e tem pelo menos um arquivo.
+        Verifique o conteúdo dos arquivos nesta pasta, você deve ver um histórico dos comandos usados com sudo. Por fim, tente executar um comando via sudo e verificar o log para checar se foi atualizado.
+
+
+        (?) O que é TTY : tty é um comando no Unix e sistemas operacionais tipo Unix que imprime o nome de arquivo do terminal conectado à entrada padrão.
 [UFW]
+    1. Verifique se o programa "UFW" está instalado corretamente na máquina virtual.
+        '$  which ufw'
+    2. O aluno avaliado deve te explicar basicamente o que é o UFW e o valor de utilizá-lo.
+
+    3. Liste o ufw
+        '$  ufw status'
+
+    4. Adicione uma nova regra para abrir a porta 8080. Verifique se esta foi adicionada listando as regras ativas.
+        Por fim, exclua essa nova regra com a ajuda do aluno que está sendo avaliado. Se algo não funcionar como
+            esperado ou não está claramente explicado, a avaliação termina aqui.
+        '$  ufw allow 8080 '
+        '$  ufw status'
+        '$  ufw status numbered' 
+        '$  ufw delete 0' < coloca a fileira que deseja deletar 
 [SSH]
+    1. Verifique se o serviço SSH está instalado corretamente na máquina virtual.
+        '$  which ssh'
+    O aluno avaliado deve ser capaz de te explicar basicamente o que é SSH e o valor de utilizá-lo.
+    Verifique se o serviço SSH usa apenas a porta 4242.
+        '$  service  ssh status '
+    O aluno avaliado deverá ajudá-lo a usar o SSH para fazer o login com o usuário recém-criado.
+        1. Pegue o ip: '$  ip address show '
+        2. Em outro terminal:  '$  ssh <username>@<ip_adr> -p 4242'
+
+        3. logout para deslogar do terminal
+
 [Script monitoring]
+    1. Como o script funciona?
+    2. O que é o cron e como ele funciona no seu script? 
 ( ) Verifique se o serviço SSH está instalado corretamente na máquina virtual está funcionando corretamente.
 ( ) O aluno avaliado deve ser capaz de te explicar basicamente o que é SSH e o valor de utilizá-lo.
 ( ) Verifique se o serviço SSH usa apenas a porta 4242.
-( ) O aluno avaliado deverá ajudá-lo a usar o SSH para fazer o login com o usuário recém-criado. Façam isso, você pode usar uma chave ou uma senha simples. Vai depender do aluno que está sendo avaliado. Claro, você
-tem que se certificar de que você não pode usar SSH com o usuário "root", conforme indicado no assunto.
 
 [Bonus]
 (x) Configurar partições vale 2 pontos.
+    '$ lsblk'
+
+
+/ERROS
+Failed to send host log message
+- Shut down VM
+- In VirtualBox, go to VM settings
+- Display >> Screen >> Graphics Controller >> Choose VBoxVGA.
+
+Salvar o estado da VMI a cada alteração/avaliação
+
+sha1sum funciona mas com lentidão
