@@ -6,13 +6,14 @@
 #
 # See the man page for details on how to write a sudoers file.
 #
-Defaults        env_reset
-Defaults        mail_badpass
-Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:>
-Defaults        requiretty
-Defaults        log_input, log_output, logfile="/var/log/sudo/sudo_session.log"
-Defaults        passwd_tries=3
-Defaults        badpass_message="BRUH MOMENT"
+Defaults passwd_tries = 3
+Defaults badpass_message = "Wrong Password!"
+Defaults logfile="/var/log/sudo/sudo.log"
+Defaults log_input, log_output
+Defaults iolog_dir="/var/log/sudo"
+
+Defaults requiretty
+Defaults secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
 
 # Host alias specification
 
