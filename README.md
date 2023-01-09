@@ -1,5 +1,9 @@
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/50052600/211400537-8388a461-cfc8-4522-bbdd-5b9312e0bec6.png" />
+</p>
+
 <h1 align="center">
- Born2beRoot [⚠️ In Development]
+ Born2beroot
 </h1>
 
 <p align="center">
